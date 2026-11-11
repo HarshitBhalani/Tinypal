@@ -1,6 +1,6 @@
 {
   "name": "tinypal",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An interactive mascot SDK for React that reacts to forms, API calls, inactivity and the cursor.",
   "keywords": [
     "mascot",
@@ -20,7 +20,7 @@
     "url": "git+https://github.com/HarshitBhalani/Tinypal.git",
     "directory": "packages/tinypal"
   },
-  "homepage": "https://tinypal-rose.vercel.app/",
+  "homepage": "https://tinypal-rose.vercel.app",
   "bugs": {
     "url": "https://github.com/HarshitBhalani/Tinypal/issues"
   },

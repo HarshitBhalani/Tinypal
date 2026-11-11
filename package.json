@@ -52,7 +52,7 @@
     "type": "git",
     "url": "git+https://github.com/HarshitBhalani/Tinypal.git"
   },
-  "homepage": "https://tinypal-rose.vercel.app/",
+  "homepage": "https://tinypal-rose.vercel.app",
   "bugs": {
     "url": "https://github.com/HarshitBhalani/Tinypal/issues"
   }

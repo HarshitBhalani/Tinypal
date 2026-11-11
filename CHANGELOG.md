@@ -3,6 +3,12 @@
 All notable changes to this project are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
+## 0.1.2 (2026-11-11)
+
+### Changed
+
+- Website link without a trailing slash.
+
 ## 0.1.1 (2026-11-11)
 
 ### Changed

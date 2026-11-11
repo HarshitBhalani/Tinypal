@@ -12,7 +12,7 @@ quiet.
 [![license: MIT](https://img.shields.io/npm/l/tinypal.svg)](LICENSE)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/tinypal)](https://bundlephobia.com/package/tinypal)
 
-**[Live demo and playground](https://tinypal-rose.vercel.app/)** · [npm](https://www.npmjs.com/package/tinypal) · [Docs](docs/getting-started.md)
+**[Live demo and playground](https://tinypal-rose.vercel.app)** · [npm](https://www.npmjs.com/package/tinypal) · [Docs](docs/getting-started.md)
 
 ## Features
 
@@ -102,7 +102,7 @@ React 18 and 19, Next.js (App Router and Pages Router), Vite, and any React
 setup. TypeScript types are included.
 
 Try every character and option live in the
-[playground](https://tinypal-rose.vercel.app/).
+[playground](https://tinypal-rose.vercel.app).
 
 ## License
 

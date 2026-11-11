@@ -10,7 +10,10 @@ export const MASCOT_CSS = `
 .tp-root[data-theme="light"]{filter:drop-shadow(0 4px 8px rgba(20,30,60,.18))}
 .tp-root[data-theme="dark"]{filter:drop-shadow(0 4px 12px rgba(0,0,0,.55))}
 .tp-root .tp-eye-open,.tp-root .tp-pupil,.tp-root .tp-spin,.tp-root .tp-dot,.tp-root .tp-z,.tp-root .tp-confetti rect{transform-box:fill-box;transform-origin:center}
-.tp-root .tp-eye-open,.tp-root .tp-pupil,.tp-root .tp-mouth,.tp-root .tp-head{transition:scale .22s ease,translate .22s ease,rotate .22s ease}
+/* Expression poses ease; cursor-driven movement (pupil translate, head) does
+   not, because the tracker already smooths it. Double smoothing feels laggy. */
+.tp-root .tp-eye-open,.tp-root .tp-mouth{transition:scale .22s ease,translate .22s ease}
+.tp-root .tp-pupil{transition:scale .22s ease}
 
 .tp-root .tp-m,.tp-root .tp-brows,.tp-root .tp-eye-happy,.tp-root .tp-eye-closed,.tp-root .tp-fxi,.tp-root .tp-tear,.tp-root .tp-confetti{display:none}
 .tp-root .tp-pupil{translate:calc((var(--tp-look-x) + var(--tp-bias-x)) * var(--tp-range)) calc((var(--tp-look-y) + var(--tp-bias-y)) * var(--tp-range))}

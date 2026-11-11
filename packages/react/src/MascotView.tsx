@@ -47,7 +47,7 @@ export interface MascotViewProps {
   trackCursor?: boolean;
   /** 0..1 how far the eyes move. Default 1. */
   trackingIntensity?: number;
-  /** 0..1 how quickly they follow. Default 0.18. */
+  /** 0..1 how quickly they follow (1 = instant). Default 0.5. */
   trackingSpeed?: number;
   /** Head tilts toward the cursor too. Default false. */
   headTracking?: boolean;
@@ -92,7 +92,7 @@ export function MascotView({
   theme = "light",
   trackCursor = true,
   trackingIntensity = 1,
-  trackingSpeed = 0.18,
+  trackingSpeed = 0.5,
   headTracking = false,
   enableFormAwareness = false,
   enableIdleAnimation = true,

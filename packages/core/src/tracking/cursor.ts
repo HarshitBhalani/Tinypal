@@ -5,7 +5,7 @@ export interface CursorTrackerOptions {
   onLook: (x: number, y: number) => void;
   /** 0..1, how far the eyes travel. Default 1. */
   intensity?: number;
-  /** 0..1, fraction of the remaining distance covered per frame. Default 0.18. */
+  /** 0..1, fraction of the remaining distance covered per frame. Default 0.5. */
   speed?: number;
   /** Ignore the cursor when the user prefers reduced motion. Default true. */
   respectReducedMotion?: boolean;
@@ -33,7 +33,7 @@ export function createCursorTracker(options: CursorTrackerOptions): CursorTracke
   const raf = options.raf ?? ((cb) => win.requestAnimationFrame(cb));
   const caf = options.caf ?? ((id) => win.cancelAnimationFrame(id));
   let intensity = options.intensity ?? 1;
-  let speed = options.speed ?? 0.18;
+  let speed = options.speed ?? 0.5;
 
   let pointer: { x: number; y: number } | null = null;
   let cur = { x: 0, y: 0 };
@@ -92,7 +92,13 @@ export function createCursorTracker(options: CursorTrackerOptions): CursorTracke
   };
   const onReduced = () => wake();
 
+  // Scrolling moves the mascot relative to a still cursor: re-aim.
+  const onScroll = () => {
+    if (pointer && active()) wake();
+  };
+
   win.addEventListener("pointermove", onMove, { passive: true });
+  win.addEventListener("scroll", onScroll, { passive: true, capture: true });
   win.document.addEventListener("pointerleave", onLeave);
   win.document.addEventListener("visibilitychange", onVisibility);
   reducedQuery?.addEventListener?.("change", onReduced);
@@ -117,6 +123,7 @@ export function createCursorTracker(options: CursorTrackerOptions): CursorTracke
       if (frame !== null) caf(frame);
       frame = null;
       win.removeEventListener("pointermove", onMove);
+      win.removeEventListener("scroll", onScroll, { capture: true });
       win.document.removeEventListener("pointerleave", onLeave);
       win.document.removeEventListener("visibilitychange", onVisibility);
       reducedQuery?.removeEventListener?.("change", onReduced);

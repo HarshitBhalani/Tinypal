@@ -38,7 +38,7 @@ export function face(o: FaceOptions): string {
   const mouthFill = o.mouthFill ?? "#5a2a3a";
   const tear = o.tear ?? "#7dd3fc";
   const browY = o.browY ?? o.eyeY - R * 1.7;
-  const range = n(R * 0.38);
+  const range = n(R * 0.45);
   const sw = n(Math.max(2.5, R * 0.28));
 
   const eye = (x: number, side: "l" | "r") => `

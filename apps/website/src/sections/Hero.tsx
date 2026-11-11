@@ -34,10 +34,6 @@ export function Hero({ theme }: { theme: SiteTheme }) {
       />
       <div className="relative mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.1fr_1fr]">
         <div className="text-center lg:text-left">
-          <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-brand-500/20 bg-brand-500/10 px-3 py-1 text-xs font-semibold text-brand-600 dark:text-brand-300">
-            <span className="h-1.5 w-1.5 rounded-full bg-brand-500" /> Open source · React +
-            TypeScript
-          </p>
           <h1 className="text-4xl font-extrabold leading-[1.05] tracking-tight sm:text-6xl">
             Give your website a{" "}
             <span className="bg-gradient-to-r from-brand-500 via-fuchsia-500 to-orange-400 bg-clip-text text-transparent">

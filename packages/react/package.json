@@ -1,0 +1,16 @@
+{
+  "name": "@tinypal/react",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@tinypal/adapters": "*",
+    "@tinypal/characters": "*",
+    "@tinypal/core": "*"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  }
+}

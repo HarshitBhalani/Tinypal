@@ -1,0 +1,11 @@
+export * from "./types";
+export { Emitter } from "./events/emitter";
+export { DEFAULT_REACTIONS } from "./expressions";
+export { StateMachine } from "./state-machine";
+export type { PlayOptions } from "./state-machine";
+export * from "./render";
+export * from "./tracking";
+export * from "./positioning";
+export * from "./personality";
+export { createMascot, watchIdle } from "./engine";
+export type { Mascot, MascotOptions, MascotEvents, SayOptions, IdleOptions } from "./engine";

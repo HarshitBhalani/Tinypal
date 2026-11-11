@@ -23,20 +23,7 @@ export function Nav({
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/75 backdrop-blur-lg dark:border-ink-800 dark:bg-ink-950/75">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
-        <a href="#top" className="flex items-center gap-2 font-bold tracking-tight">
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-500 text-white">
-            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-              <circle cx="8.5" cy="11" r="2.2" fill="currentColor" />
-              <circle cx="15.5" cy="11" r="2.2" fill="currentColor" />
-              <path
-                d="M8.5 16q3.5 2.5 7 0"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                fill="none"
-                strokeLinecap="round"
-              />
-            </svg>
-          </span>
+        <a href="#top" className="text-lg font-bold tracking-tight">
           tinypal
         </a>
         <nav className="hidden items-center gap-7 text-sm text-slate-600 md:flex dark:text-slate-400">

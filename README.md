@@ -8,7 +8,11 @@ thinks while requests load, celebrates when they succeed, looks sad when they
 fail, follows the cursor with its eyes, and dozes off when the visitor goes
 quiet.
 
-> **Status:** in development. Not yet published to npm.
+[![npm version](https://img.shields.io/npm/v/tinypal.svg)](https://www.npmjs.com/package/tinypal)
+[![license: MIT](https://img.shields.io/npm/l/tinypal.svg)](LICENSE)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/tinypal)](https://bundlephobia.com/package/tinypal)
+
+**[Live demo and playground](https://tinypal-rose.vercel.app/)** · [npm](https://www.npmjs.com/package/tinypal) · [Docs](docs/getting-started.md)
 
 ## Features
 

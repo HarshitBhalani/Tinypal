@@ -3,7 +3,15 @@
 All notable changes to this project are documented here. This project follows
 [Semantic Versioning](https://semver.org/).
 
-## 0.1.0 (unreleased)
+## 0.1.1 (2026-11-11)
+
+### Changed
+
+- README: removed the outdated "not yet published" status, added npm, license
+  and size badges and a link to the live website.
+- `homepage` in package.json now points to the live website.
+
+## 0.1.0 (2026-11-11)
 
 First release.
 

@@ -1,0 +1,13 @@
+{
+  "name": "@tinypal/example-basic-react",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@tinypal/react": "*"
+  }
+}

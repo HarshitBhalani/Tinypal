@@ -47,8 +47,11 @@ export interface MascotViewProps {
   trackCursor?: boolean;
   /** 0..1 how far the eyes move. Default 1. */
   trackingIntensity?: number;
-  /** 0..1 how quickly they follow (1 = instant). Default 0.5. */
-  trackingSpeed?: number;
+  /**
+   * How quickly the eyes follow: "slow", "normal", "fast", "instant", or a
+   * number 0..1 (1 = instant). Default "normal" (0.5).
+   */
+  trackingSpeed?: TrackingSpeed;
   /** Head tilts toward the cursor too. Default false. */
   headTracking?: boolean;
   /** React to native HTML forms on the page. Default false. */
@@ -76,6 +79,14 @@ export interface MascotViewProps {
 
 const noopSubscribe = () => () => {};
 
+/** Named eye-tracking speeds. Numbers 0..1 are also accepted. */
+export const TRACKING_SPEEDS = { slow: 0.12, normal: 0.5, fast: 0.8, instant: 1 } as const;
+export type TrackingSpeedPreset = keyof typeof TRACKING_SPEEDS;
+export type TrackingSpeed = TrackingSpeedPreset | number;
+
+export const resolveTrackingSpeed = (s: TrackingSpeed): number =>
+  typeof s === "number" ? Math.min(Math.max(s, 0.01), 1) : TRACKING_SPEEDS[s];
+
 const defaultClick = (m: Mascot) => {
   m.play("happy");
   m.play("waving", { duration: 1400 });
@@ -92,7 +103,7 @@ export function MascotView({
   theme = "light",
   trackCursor = true,
   trackingIntensity = 1,
-  trackingSpeed = 0.5,
+  trackingSpeed = "normal",
   headTracking = false,
   enableFormAwareness = false,
   enableIdleAnimation = true,
@@ -177,9 +188,10 @@ export function MascotView({
   }, [mascot, html, hidden]);
 
   // Cursor tracking (rAF, writes CSS variables only).
-  const trackerOptions = useRef({ intensity: trackingIntensity, speed: trackingSpeed });
+  const speed = resolveTrackingSpeed(trackingSpeed);
+  const trackerOptions = useRef({ intensity: trackingIntensity, speed });
   useEffect(() => {
-    trackerOptions.current = { intensity: trackingIntensity, speed: trackingSpeed };
+    trackerOptions.current = { intensity: trackingIntensity, speed };
   });
   const tracker = useRef<ReturnType<typeof createCursorTracker> | null>(null);
   useEffect(() => {
@@ -198,8 +210,8 @@ export function MascotView({
     };
   }, [html, hidden, trackCursor]);
   useEffect(() => {
-    tracker.current?.setOptions({ intensity: trackingIntensity, speed: trackingSpeed });
-  }, [trackingIntensity, trackingSpeed]);
+    tracker.current?.setOptions({ intensity: trackingIntensity, speed });
+  }, [trackingIntensity, speed]);
 
   // Form awareness.
   const formOptions = typeof enableFormAwareness === "object" ? enableFormAwareness : undefined;

@@ -103,7 +103,6 @@ export function EventDemo({ theme }: { theme: SiteTheme }) {
         await wait(1400);
         if (serverFails) throw new Error("Server said no");
       });
-      formRef.current?.reset();
     } catch {
       /* the mascot already reacted */
     } finally {

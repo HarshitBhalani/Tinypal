@@ -12,7 +12,7 @@ export default tseslint.config(
     rules: reactHooks.configs.recommended.rules,
   },
   {
-    files: ["scripts/**/*.{js,mjs}"],
+    files: ["**/scripts/**/*.{js,mjs}"],
     languageOptions: {
       globals: {
         process: "readonly",
@@ -21,6 +21,7 @@ export default tseslint.config(
         fetch: "readonly",
         WebSocket: "readonly",
         setTimeout: "readonly",
+        URL: "readonly",
       },
     },
   },

@@ -1,7 +1,8 @@
 // React API
 export { ContextMascot, MascotProvider } from "./components";
 export type { ContextMascotProps, MascotProviderProps } from "./components";
-export type { MascotViewProps } from "./MascotView";
+export type { MascotViewProps, TrackingSpeed, TrackingSpeedPreset } from "./MascotView";
+export { TRACKING_SPEEDS } from "./MascotView";
 export { useMascot, useMascotState, useMascotMessage } from "./hooks";
 export { useCreateMascot } from "./context";
 
@@ -10,6 +11,13 @@ export {
   createMascot,
   watchIdle,
   renderCharacter,
+  face,
+  applyState,
+  applyLook,
+  ensureStyles,
+  createCursorTracker,
+  fx,
+  MASCOT_CSS,
   EXPRESSIONS,
   ACTIONS,
   MASCOT_EVENTS,
@@ -33,6 +41,9 @@ export type {
   AttachedPosition,
   Offset,
   Theme,
+  FaceOptions,
+  FxOptions,
+  IdleOptions,
 } from "@tinypal/core";
 
 // Characters

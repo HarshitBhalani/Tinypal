@@ -105,7 +105,7 @@ export function Gallery({
     <Section
       id="characters"
       eyebrow="Characters"
-      title="Eight original companions"
+      title="19 original companions"
       lead="Every character supports the same 8 expressions and 7 animations. Pick one and it becomes the companion in the corner of this page."
       className="bg-slate-50/70 dark:bg-ink-900/40"
     >

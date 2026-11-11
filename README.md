@@ -1,116 +1,117 @@
-# Context Mascot (npm package: `tinypal`)
+# tinypal
 
-An interactive website companion SDK. A small SVG mascot that understands what is happening on your site (forms, API calls, inactivity, cursor) and reacts to it.
+**Give your website a little personality.**
 
-> Status: **in development**. Core engine, 8 characters, form/API adapters and the React SDK are built and tested. Website, docs and npm publishing are in progress.
+tinypal is a mascot SDK for React. A small animated companion sits on your page
+and reacts to what is happening: it gets curious when a form is focused,
+thinks while requests load, celebrates when they succeed, looks sad when they
+fail, follows the cursor with its eyes, and dozes off when the visitor goes
+quiet.
 
-## What it does
+> **Status:** in development. Not yet published to npm.
 
-| Website event                 | Mascot reaction                   |
-| ----------------------------- | --------------------------------- |
-| Form focused                  | curious                           |
-| User typing                   | thinking                          |
-| Validation error              | confused                          |
-| Form submitting / API loading | loading                           |
-| Success                       | happy / celebrating               |
-| Failure                       | sad                               |
-| Form reset                    | idle                              |
-| No activity (configurable)    | sleepy, then sleeping             |
-| Activity after sleeping       | wakes up surprised                |
-| Cursor moves                  | eyes (and optionally head) follow |
+## Features
 
-## Planned usage
+- **19 original characters**: robot, cat, dog, fox, panda, alien, ghost, bunny, blob, owl, penguin, dino, mouse, monster, chick, frog, bear, cactus and pip. Plus an API for your own.
+- **8 expressions and 7 animations**: idle, happy, curious, thinking, surprised, confused, sad, sleepy; loading, celebrating, blinking, looking left/right, waving, sleeping.
+- **Cursor tracking** with adjustable speed (`"slow"` to `"instant"`), on one `requestAnimationFrame` loop with zero React re-renders.
+- **Form awareness** for native forms, React Hook Form and Formik. Never reads field values; password fields are ignored.
+- **API awareness** with `fetch` and Axios adapters. You decide which status codes count as errors.
+- **Speech bubbles** with custom messages, rotating lines and multiple languages.
+- **Positioning** in corners, at coordinates, next to an element, inline, or draggable.
+- **Inactivity**: sleepy, then asleep, then a surprised wake-up.
+- **TypeScript-first**, SSR-safe (Next.js), no runtime dependencies, no analytics, respects `prefers-reduced-motion`.
+
+## Install
+
+```bash
+npm install tinypal
+```
+
+## Usage
 
 ```tsx
-import { ContextMascot, useMascot } from "tinypal";
+import { MascotProvider, useMascot } from "tinypal";
 
-<ContextMascot
-  character="robot"
-  position="bottom-right"
-  size={150}
-  trackCursor
-  enableFormAwareness
-  enableIdleAnimation
-/>;
+function SaveButton() {
+  const mascot = useMascot();
 
-const mascot = useMascot();
-mascot.play("happy");
-mascot.say("Your form was submitted!");
+  const save = async () => {
+    mascot.play("loading");
+    try {
+      await saveData();
+      mascot.play("happy", { duration: 3000 });
+      mascot.say("Saved!");
+    } catch {
+      mascot.play("sad", { duration: 3000 });
+      mascot.say("Something went wrong.");
+    }
+  };
+
+  return <button onClick={save}>Save</button>;
+}
+
+export default function App() {
+  return (
+    <MascotProvider character="cat" position="bottom-right" enableFormAwareness>
+      <SaveButton />
+    </MascotProvider>
+  );
+}
+```
+
+Or report events and let the mascot pick the reaction:
+
+```ts
 mascot.emit("api:loading");
+mascot.emit("api:success");
+mascot.emit("form:invalid");
 ```
 
-The API may be refined during implementation. Docs will always match what is actually built.
+## Documentation
 
-## Core concepts
+Full guides and API reference are in [docs/](docs/README.md):
+[getting started](docs/getting-started.md) ·
+[characters](docs/characters.md) ·
+[expressions](docs/expressions.md) ·
+[cursor tracking](docs/cursor-tracking.md) ·
+[forms](docs/forms.md) ·
+[API](docs/api.md) ·
+[messages](docs/messages.md) ·
+[positioning](docs/positioning.md) ·
+[inactivity](docs/idle.md) ·
+[React](docs/react.md) ·
+[Next.js](docs/nextjs.md) ·
+[custom characters](docs/custom-characters.md) ·
+[API reference](docs/api-reference.md) ·
+[troubleshooting](docs/troubleshooting.md)
 
-- **Expressions (8):** idle, happy, curious, thinking, surprised, confused, sad, sleepy
-- **Extra states:** loading, celebrating, blinking, looking-left, looking-right, waving, sleeping
-- **Characters (8):** robot, cat, dog, fox, panda, alien, ghost, bunny. Original SVG art, one shared expression interface, extensible with custom characters.
-- **Events:** `form:*` and `api:*` (start, loading, success, error, network-error, cancelled)
-- **Positioning:** 6 presets, custom coordinates, attach to a DOM element, draggable, mobile responsive
-- **Messages:** speech bubbles, custom per-event messages, i18n architecture, no-repeat logic
+Runnable examples are in [examples/](examples/README.md).
 
-## Principles
-
-- Core engine is framework-independent. React is a thin integration layer.
-- Never read or store password or sensitive field values.
-- No analytics, no network requests, SSR safe (Next.js), tree-shakable.
-- Respects `prefers-reduced-motion`; mascot is decorative (`aria-hidden`) and can be muted/hidden.
-- No claim of auto-detecting every validation library: explicit event APIs are provided.
-- HTTP 4xx/5xx handling is developer-configurable.
-
-## Tech stack
-
-React, TypeScript, Vite, Tailwind CSS, CSS/SVG animation (Framer Motion only if needed), Zustand only where needed, tsup, Vitest, ESLint, Prettier, npm workspaces.
-
-## Planned structure
+## Repository layout
 
 ```
-context-mascot/
-  apps/
-    website/          landing page, gallery, docs links
-    playground/       live playground using the real engine
-  packages/
-    core/             engine, events, state-machine, expressions, positioning, tracking, personality
-    react/            ContextMascot, MascotProvider, useMascot
-    characters/       robot cat dog fox panda alien ghost bunny
-    adapters/         native-form, react-hook-form, formik, fetch, axios
-  examples/           basic-react, form-validation, api-interactions, nextjs-example
-  docs/
+packages/
+  core/         framework-independent engine, rendering, tracking, positioning, messages
+  characters/   the 19 SVG characters
+  adapters/     native forms, React Hook Form, Formik, fetch, Axios
+  react/        React components and hooks (published as `tinypal`)
+apps/
+  website/      landing page with live gallery, demos and playground
+examples/       basic-react, form-validation, api-interactions, nextjs-example
+docs/           documentation
 ```
 
-Publishing decision (open): publish as one package `tinypal` with subpath exports (`tinypal`, `tinypal/core`, `tinypal/characters`, `tinypal/adapters/*`), with the workspace packages bundled by tsup.
+## Development
 
-## Phased plan
-
-Each phase ends with typecheck, lint and tests passing before moving on.
-
-1. **Inspect and scaffold:** workspace, tsconfig, ESLint, Prettier, Vitest
-2. **Architecture and workspace config:** package boundaries, exports map
-3. **Core engine:** event bus, state machine, typed events
-4. **Expression and animation system:** the 8 expressions plus extra states
-5. **First character (robot):** fully working, defines the character interface
-6. **Remaining 7 characters**
-7. **Cursor tracking and positioning**
-8. **Form awareness:** native forms, React Hook Form and Formik adapters
-9. **API awareness:** fetch and Axios adapters, manual `emit`
-10. **Idle, sleep, wake**
-11. **React layer:** `ContextMascot`, `MascotProvider`, `useMascot`
-12. **Landing page**
-13. **Live playground** on the real engine
-14. **Docs and examples**
-15. **Tests and performance pass**
-16. **npm publish preparation** (`npm pack` validation; **no publish without explicit approval**)
-
-## Before publishing to npm (your checklist)
-
-1. Create an npm account at npmjs.com and verify your email.
-2. Enable 2FA (required to publish).
-3. Decide the package name. Checked on 2026-11-07: `tinypal` is unpublished (404). Re-check right before publishing. A scoped name like `@yourname/tinypal` is the fallback.
-4. Create a GitHub repository (needed for real repo/homepage/bugs links in `package.json` and the footer).
-5. Choose a license (MIT recommended) and the name to appear in it.
-6. Later: `npm login`, then `npm publish --access public` after final approval.
+```bash
+npm install
+npm run dev          # website at http://localhost:5173
+npm test             # unit tests (Vitest)
+npm run typecheck
+npm run lint
+```
 
 ## License
 
-To be decided (MIT proposed).
+[MIT](LICENSE)

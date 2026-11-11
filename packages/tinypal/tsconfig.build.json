@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    "paths": {
+      "@tinypal/core": ["../core/src/index.ts"],
+      "@tinypal/characters": ["../characters/src/index.ts"],
+      "@tinypal/adapters": ["../adapters/src/index.ts"],
+      "@tinypal/react": ["../react/src/index.ts"]
+    }
+  },
+  "include": ["src", "../core/src", "../characters/src", "../adapters/src", "../react/src"],
+  "exclude": ["../**/*.test.ts", "../**/*.test.tsx"]
+}

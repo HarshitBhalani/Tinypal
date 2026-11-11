@@ -78,7 +78,7 @@ const FEATURES: { title: string; body: string; icon: string }[] = [
   },
   {
     title: "Multiple characters",
-    body: "Eight original SVG companions, and an API to add your own.",
+    body: "19 original SVG companions, and an API to add your own.",
     icon: "M16 21v-2a4 4 0 0 0-8 0v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM22 21v-2a4 4 0 0 0-3-3.9M2 21v-2a4 4 0 0 1 3-3.9",
   },
   {
@@ -223,7 +223,7 @@ export function Footer() {
     { label: "GitHub", href: LINKS.github },
     { label: "npm (soon)", href: LINKS.npm },
     { label: "Documentation", href: LINKS.docs },
-    { label: "Live demo", href: "#reactions" },
+    { label: "Playground", href: "#playground" },
     { label: "MIT License", href: LINKS.license },
   ];
   return (

@@ -4,6 +4,7 @@ import type { SiteTheme } from "../hooks/useTheme";
 const NAV = [
   { href: "#characters", label: "Characters" },
   { href: "#reactions", label: "Live demo" },
+  { href: "#playground", label: "Playground" },
   { href: "#code", label: "Code" },
   { href: "#docs", label: "Docs" },
 ];

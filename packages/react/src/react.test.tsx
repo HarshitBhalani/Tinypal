@@ -209,3 +209,93 @@ describe("SSR", () => {
     expect(html).toContain("visibility:hidden");
   });
 });
+
+describe("tracking speed presets", () => {
+  it("maps names to speeds and clamps numbers", async () => {
+    const { resolveTrackingSpeed, TRACKING_SPEEDS } = await import("./MascotView");
+    expect(resolveTrackingSpeed("slow")).toBe(TRACKING_SPEEDS.slow);
+    expect(resolveTrackingSpeed("instant")).toBe(1);
+    expect(resolveTrackingSpeed(5)).toBe(1);
+    expect(resolveTrackingSpeed(0)).toBe(0.01);
+  });
+
+  it("accepts a preset name as a prop", () => {
+    render(<ContextMascot trackingSpeed="fast" />);
+    expect(svg()).not.toBeNull();
+  });
+});
+
+describe("state hooks", () => {
+  it("useMascotState / useMascotMessage re-render on change", async () => {
+    const { useMascotState, useMascotMessage } = await import("./hooks");
+    const mascot = createMascot();
+    function Readout() {
+      const s = useMascotState(mascot);
+      const msg = useMascotMessage(mascot);
+      return (
+        <p data-testid="out">
+          {s.expression}/{s.action ?? "-"}/{msg ?? "-"}
+        </p>
+      );
+    }
+    render(<Readout />);
+    expect(screen.getByTestId("out").textContent).toBe("idle/-/-");
+    act(() => {
+      mascot.play("loading");
+      mascot.say("wait", { duration: 0 });
+    });
+    expect(screen.getByTestId("out").textContent).toBe("idle/loading/wait");
+  });
+});
+
+describe("no leaks", () => {
+  it("100 mount/unmount cycles leave no window listeners or timers behind", () => {
+    vi.useFakeTimers();
+    // Track each (target, type, listener) so an extra defensive remove can't
+    // hide a real leak.
+    const live = new Set<string>();
+    const ids = new WeakMap<object, number>();
+    let next = 0;
+    const key = (target: object, type: string, fn: unknown) => {
+      if (!ids.has(fn as object)) ids.set(fn as object, ++next);
+      const t = target === window ? "window" : "document";
+      return `${t}:${type}:${ids.get(fn as object)}`;
+    };
+    const spies = [window, document].flatMap((target) => {
+      const add = target.addEventListener.bind(target);
+      const remove = target.removeEventListener.bind(target);
+      return [
+        vi.spyOn(target, "addEventListener").mockImplementation(((
+          type: string,
+          fn: never,
+          o?: boolean | AddEventListenerOptions,
+        ) => {
+          live.add(key(target, type, fn));
+          add(type, fn, o);
+        }) as typeof target.addEventListener),
+        vi.spyOn(target, "removeEventListener").mockImplementation(((
+          type: string,
+          fn: never,
+          o?: boolean | EventListenerOptions,
+        ) => {
+          live.delete(key(target, type, fn));
+          remove(type, fn, o);
+        }) as typeof target.removeEventListener),
+      ];
+    });
+    const before = new Set(live);
+    let peak = 0;
+    for (let i = 0; i < 100; i++) {
+      const { unmount } = render(
+        <ContextMascot enableFormAwareness draggable trackCursor character="frog" />,
+      );
+      peak = Math.max(peak, live.size);
+      unmount();
+    }
+    spies.forEach((s) => s.mockRestore());
+    const leaked = [...live].filter((k) => !before.has(k));
+    expect(peak).toBeGreaterThan(0); // listeners really were attached
+    expect(leaked).toEqual([]);
+    expect(vi.getTimerCount()).toBe(0);
+  });
+});

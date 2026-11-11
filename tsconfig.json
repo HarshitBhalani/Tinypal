@@ -1,4 +1,16 @@
 {
   "extends": "./tsconfig.base.json",
-  "include": ["packages/*/src", "apps/*/src", "vitest.config.ts"]
+  "compilerOptions": {
+    "paths": {
+      "tinypal": ["./packages/react/src/index.ts"]
+    }
+  },
+  "include": [
+    "packages/*/src",
+    "apps/*/src",
+    "examples/basic-react/src",
+    "examples/form-validation/src",
+    "examples/api-interactions/src",
+    "vitest.config.ts"
+  ]
 }

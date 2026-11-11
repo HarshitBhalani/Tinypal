@@ -1,5 +1,8 @@
 import { ContextMascot, EXPRESSIONS, useCreateMascot } from "@tinypal/react";
-import type { Expression, Mascot } from "@tinypal/react";
+import { useState } from "react";
+import type { CharacterId, Expression, Mascot, TrackingSpeedPreset } from "@tinypal/react";
+
+const SPEEDS: TrackingSpeedPreset[] = ["slow", "normal", "fast", "instant"];
 import { Button, InstallCommand } from "../components/ui";
 import { INSTALL } from "../data/links";
 import type { SiteTheme } from "../hooks/useTheme";
@@ -19,8 +22,12 @@ const onHeroClick = (m: Mascot) => {
   m.say(r.say, { duration: 2600 });
 };
 
+const HERO_CHARACTERS: CharacterId[] = ["robot", "cat", "fox", "ghost"];
+
 export function Hero({ theme }: { theme: SiteTheme }) {
   const mascot = useCreateMascot({ autoMessages: true });
+  const [character, setCharacter] = useState<CharacterId>("robot");
+  const [speed, setSpeed] = useState<TrackingSpeedPreset>("normal");
 
   return (
     <section
@@ -57,15 +64,41 @@ export function Hero({ theme }: { theme: SiteTheme }) {
 
         <div className="relative mx-auto w-full max-w-md">
           <div className="relative rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-2xl shadow-brand-500/10 backdrop-blur dark:border-ink-700 dark:bg-ink-900/70">
-            <div className="flex min-h-[300px] items-end justify-center pt-16">
+            <div
+              role="group"
+              aria-label="Choose a character"
+              className="flex justify-center gap-1 rounded-xl bg-slate-100 p-1 dark:bg-ink-800"
+            >
+              {HERO_CHARACTERS.map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  aria-pressed={character === c}
+                  onClick={() => {
+                    setCharacter(c);
+                    mascot.play("happy", { duration: 1500 });
+                    mascot.play("waving", { duration: 1200 });
+                  }}
+                  className={`flex-1 rounded-lg px-3 py-1.5 text-sm font-medium capitalize transition ${
+                    character === c
+                      ? "bg-white text-slate-900 shadow-sm dark:bg-ink-700 dark:text-white"
+                      : "text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white"
+                  }`}
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+            <div className="flex min-h-[300px] items-end justify-center pt-12">
               <ContextMascot
                 mascot={mascot}
-                character="robot"
+                character={character}
                 position="inline"
                 size={240}
                 theme={theme}
                 headTracking
                 responsive={false}
+                trackingSpeed={speed}
                 onClick={onHeroClick}
               />
             </div>
@@ -86,6 +119,32 @@ export function Hero({ theme }: { theme: SiteTheme }) {
                   {e}
                 </button>
               ))}
+            </div>
+            <div className="mt-5 flex items-center justify-center gap-2 border-t border-slate-200 pt-4 dark:border-ink-700">
+              <span className="text-xs font-medium text-slate-500 dark:text-slate-400">
+                Eye speed
+              </span>
+              <div
+                role="group"
+                aria-label="Eye speed"
+                className="flex gap-0.5 rounded-lg bg-slate-100 p-0.5 dark:bg-ink-800"
+              >
+                {SPEEDS.map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    aria-pressed={speed === s}
+                    onClick={() => setSpeed(s)}
+                    className={`rounded-md px-2.5 py-1 text-xs font-medium capitalize transition ${
+                      speed === s
+                        ? "bg-white text-slate-900 shadow-sm dark:bg-ink-700 dark:text-white"
+                        : "text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white"
+                    }`}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </div>

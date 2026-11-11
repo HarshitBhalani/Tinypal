@@ -8,3 +8,6 @@ preview.html
 .vscode
 *.log
 .idea
+packages/tinypal/README.md
+packages/tinypal/LICENSE
+packages/tinypal/CHANGELOG.md

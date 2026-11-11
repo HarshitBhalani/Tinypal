@@ -114,3 +114,52 @@ describe("cursor tracker", () => {
     remove.mockRestore();
   });
 });
+
+describe("cursor tracker: scroll, leave, off-screen", () => {
+  it("re-aims on scroll and recentres when the pointer leaves the page", () => {
+    const f = frames();
+    const onLook = vi.fn();
+    let left = 450;
+    target.getBoundingClientRect = () => ({ left, top: 350, width: 100, height: 100 }) as DOMRect;
+    const t = createCursorTracker({ target, onLook, raf: f.raf, caf: f.caf, speed: 1 });
+    move(500, 400); // exactly on the centre
+    f.run();
+    expect(onLook).toHaveBeenLastCalledWith(0, 0);
+    left = 50; // page scrolled: mascot moved left of the cursor
+    window.dispatchEvent(new Event("scroll"));
+    f.run();
+    expect(onLook.mock.calls[onLook.mock.calls.length - 1]![0]).toBeGreaterThan(0);
+    document.dispatchEvent(new Event("pointerleave"));
+    f.run(5);
+    expect(onLook).toHaveBeenLastCalledWith(0, 0);
+    t.destroy();
+  });
+
+  it("pauses while the mascot is off screen", () => {
+    const f = frames();
+    const onLook = vi.fn();
+    let callback: (entries: { isIntersecting: boolean }[]) => void = () => {};
+    const observe = vi.fn();
+    const disconnect = vi.fn();
+    class FakeIO {
+      constructor(cb: typeof callback) {
+        callback = cb;
+      }
+      observe = observe;
+      disconnect = disconnect;
+    }
+    const original = (window as unknown as { IntersectionObserver?: unknown }).IntersectionObserver;
+    Object.assign(window, { IntersectionObserver: FakeIO });
+    const t = createCursorTracker({ target, onLook, raf: f.raf, caf: f.caf, speed: 1 });
+    expect(observe).toHaveBeenCalledWith(target);
+    callback([{ isIntersecting: false }]);
+    move(1000, 400);
+    expect(f.pending()).toBe(0);
+    callback([{ isIntersecting: true }]);
+    f.run();
+    expect(onLook).toHaveBeenLastCalledWith(1, 0);
+    t.destroy();
+    expect(disconnect).toHaveBeenCalled();
+    Object.assign(window, { IntersectionObserver: original });
+  });
+});

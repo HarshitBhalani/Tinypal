@@ -102,7 +102,7 @@ React 18 and 19, Next.js (App Router and Pages Router), Vite, and any React
 setup. TypeScript types are included.
 
 Try every character and option live in the
-[playground](https://tinypal-rose.vercel.app).
+[playground](https://tinypal-rose.vercel.app/#playground).
 
 ## License
 

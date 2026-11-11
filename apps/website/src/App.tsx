@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MascotProvider } from "@tinypal/react";
 import { Nav } from "./components/Nav";
 import { Hero } from "./sections/Hero";
@@ -13,6 +13,14 @@ export default function App() {
   const { theme, toggle } = useTheme();
   const [config, setConfig] = useState(DEFAULT_CONFIG);
   const [mascotHidden, setMascotHidden] = useState(false);
+
+  // The page is rendered client-side, so the browser can't jump to a #hash
+  // on first load. Scroll to it once the sections exist.
+  useEffect(() => {
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    if (!id) return;
+    requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView());
+  }, []);
 
   return (
     <MascotProvider

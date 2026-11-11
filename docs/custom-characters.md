@@ -44,6 +44,12 @@ const tomato = defineCharacter({
   `zzz`, thinking dots, loading spinner and confetti.
 - Keep the artwork flat SVG: no `<script>`, no external images.
 
+> **Security:** the `body` string is inserted into the page as-is, so treat it
+> like code. Only use SVG you wrote or fully trust. Never build `body` from user
+> input (uploads, form fields, URL parameters, database content written by
+> users), because an attacker could inject scripts (XSS). The `id` and `accent`
+> values are escaped, but `body` is not.
+
 ## `face()` options
 
 | Option                     |                                                                       | Default                 |

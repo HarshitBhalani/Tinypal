@@ -28,3 +28,11 @@ First release.
 - React: `ContextMascot`, `MascotProvider`, `useMascot`, `useMascotState`,
   `useMascotMessage`, `useCreateMascot`. SSR-safe; works under StrictMode.
 - `tinypal/core` entry without React.
+
+### Security
+
+- `renderCharacter` escapes attribute values (`id`, `accent`, expression,
+  action, theme), so a character colour taken from user settings cannot inject
+  HTML or extra CSS.
+- Documented that custom character `body` SVG is inserted as-is and must only
+  come from trusted sources.

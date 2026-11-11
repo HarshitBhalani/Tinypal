@@ -88,6 +88,10 @@ Full guides and API reference are in [docs/](docs/README.md):
 
 Runnable examples are in [examples/](examples/README.md).
 
+> **Security note:** custom character artwork (`defineCharacter({ body })`) is
+> inserted as raw SVG. Only use SVG you trust, never SVG built from user input.
+> See [custom characters](docs/custom-characters.md).
+
 ## Repository layout
 
 ```

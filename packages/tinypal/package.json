@@ -65,12 +65,6 @@
   "peerDependencies": {
     "react": ">=18"
   },
-  "devDependencies": {
-    "@tinypal/adapters": "*",
-    "@tinypal/characters": "*",
-    "@tinypal/core": "*",
-    "@tinypal/react": "*"
-  },
   "engines": {
     "node": ">=18"
   }

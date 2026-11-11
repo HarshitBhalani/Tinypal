@@ -96,29 +96,13 @@ Runnable examples are in [examples/](examples/README.md).
 > inserted as raw SVG. Only use SVG you trust, never SVG built from user input.
 > See [custom characters](docs/custom-characters.md).
 
-## Repository layout
+## Works with
 
-```
-packages/
-  core/         framework-independent engine, rendering, tracking, positioning, messages
-  characters/   the 19 SVG characters
-  adapters/     native forms, React Hook Form, Formik, fetch, Axios
-  react/        React components and hooks (published as `tinypal`)
-apps/
-  website/      landing page with live gallery, demos and playground
-examples/       basic-react, form-validation, api-interactions, nextjs-example
-docs/           documentation
-```
+React 18 and 19, Next.js (App Router and Pages Router), Vite, and any React
+setup. TypeScript types are included.
 
-## Development
-
-```bash
-npm install
-npm run dev          # website at http://localhost:5173
-npm test             # unit tests (Vitest)
-npm run typecheck
-npm run lint
-```
+Try every character and option live in the
+[playground](https://tinypal-rose.vercel.app/).
 
 ## License
 

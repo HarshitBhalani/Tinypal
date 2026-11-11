@@ -14,9 +14,13 @@ export interface RenderOptions {
   reducedMotion?: boolean;
 }
 
+/** Escape a value for use inside a double-quoted XML attribute. */
+const attr = (v: unknown): string =>
+  String(v).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+
 /** Render a character to an SVG string. Pure and SSR-safe. */
 export function renderCharacter(character: CharacterDefinition, o: RenderOptions = {}): string {
-  const size = o.size ?? 150;
+  const size = Number(o.size ?? 150) || 150;
   const attrs = [
     `class="tp-root"`,
     `xmlns="http://www.w3.org/2000/svg"`,
@@ -25,12 +29,13 @@ export function renderCharacter(character: CharacterDefinition, o: RenderOptions
     `height="${size}"`,
     `aria-hidden="true"`,
     `focusable="false"`,
-    `data-character="${character.id}"`,
-    `data-expression="${o.expression ?? "idle"}"`,
-    `data-theme="${o.theme ?? "light"}"`,
-    `style="--tp-accent:${character.accent}"`,
+    `data-character="${attr(character.id)}"`,
+    `data-expression="${attr(o.expression ?? "idle")}"`,
+    `data-theme="${attr(o.theme ?? "light")}"`,
+    // ";" is stripped too, so an accent value cannot add extra CSS declarations.
+    `style="--tp-accent:${attr(String(character.accent).replace(/;/g, ""))}"`,
   ];
-  if (o.action) attrs.push(`data-action="${o.action}"`);
+  if (o.action) attrs.push(`data-action="${attr(o.action)}"`);
   if (o.headTracking) attrs.push(`data-head="on"`);
   if (o.reducedMotion) attrs.push(`data-motion="off"`);
   return `<svg ${attrs.join(" ")}><g class="tp-float">${character.body}</g></svg>`;

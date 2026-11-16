@@ -7,7 +7,7 @@
 
 **Give your website a little personality.**
 
-![tinypal reacting to a form and API calls](https://raw.githubusercontent.com/HarshitBhalani/Tinypal/main/docs/assets/demo.gif)
+![tinypal celebrating after a successful request](https://raw.githubusercontent.com/HarshitBhalani/Tinypal/main/docs/assets/demo.png)
 
 tinypal is a mascot SDK for React. A small animated companion sits on your page
 and reacts to what is happening: it gets curious when a form is focused,

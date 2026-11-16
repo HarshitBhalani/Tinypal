@@ -1,16 +1,19 @@
 # tinypal
 
+[![npm version](https://img.shields.io/npm/v/tinypal.svg)](https://www.npmjs.com/package/tinypal)
+[![license: MIT](https://img.shields.io/npm/l/tinypal.svg)](LICENSE)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/tinypal)](https://bundlephobia.com/package/tinypal)
+[![types: TypeScript](https://img.shields.io/npm/types/tinypal.svg)](https://www.npmjs.com/package/tinypal)
+
 **Give your website a little personality.**
+
+![tinypal reacting to a form and API calls](https://raw.githubusercontent.com/HarshitBhalani/Tinypal/main/docs/assets/demo.gif)
 
 tinypal is a mascot SDK for React. A small animated companion sits on your page
 and reacts to what is happening: it gets curious when a form is focused,
 thinks while requests load, celebrates when they succeed, looks sad when they
 fail, follows the cursor with its eyes, and dozes off when the visitor goes
 quiet.
-
-[![npm version](https://img.shields.io/npm/v/tinypal.svg)](https://www.npmjs.com/package/tinypal)
-[![license: MIT](https://img.shields.io/npm/l/tinypal.svg)](LICENSE)
-[![bundle size](https://img.shields.io/bundlephobia/minzip/tinypal)](https://bundlephobia.com/package/tinypal)
 
 **[Live demo and playground](https://tinypal-rose.vercel.app)** · [npm](https://www.npmjs.com/package/tinypal) · [Docs](docs/getting-started.md)
 
@@ -107,3 +110,10 @@ Try every character and option live in the
 ## License
 
 [MIT](LICENSE)
+
+---
+
+Made by [Harshit Bhalani](https://github.com/HarshitBhalani). If tinypal made
+your site a little friendlier, you can
+[buy me a coffee](https://buymeacoffee.com/harshit187) ☕ or leave a ⭐ on
+[GitHub](https://github.com/HarshitBhalani/Tinypal).

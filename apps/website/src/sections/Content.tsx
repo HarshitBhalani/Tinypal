@@ -221,7 +221,7 @@ export function Docs() {
 export function Footer() {
   const links: { label: string; href: string | null }[] = [
     { label: "GitHub", href: LINKS.github },
-    { label: "npm (soon)", href: LINKS.npm },
+    { label: "npm", href: LINKS.npm },
     { label: "Documentation", href: LINKS.docs },
     { label: "Playground", href: "#playground" },
     { label: "MIT License", href: LINKS.license },
@@ -229,7 +229,26 @@ export function Footer() {
   return (
     <footer className="border-t border-slate-200 px-4 py-10 sm:px-6 dark:border-ink-800">
       <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 text-sm text-slate-500 sm:flex-row dark:text-slate-400">
-        <p>tinypal · Made with care for friendlier websites.</p>
+        <p>
+          tinypal · Built by{" "}
+          <a
+            href={LINKS.author}
+            target="_blank"
+            rel="noreferrer"
+            className="font-medium text-slate-700 underline-offset-4 transition hover:text-slate-900 hover:underline dark:text-slate-200 dark:hover:text-white"
+          >
+            Harshit Bhalani
+          </a>{" "}
+          ·{" "}
+          <a
+            href={LINKS.coffee}
+            target="_blank"
+            rel="noreferrer"
+            className="transition hover:text-slate-900 dark:hover:text-white"
+          >
+            ☕ Buy me a coffee
+          </a>
+        </p>
         <nav className="flex flex-wrap justify-center gap-5">
           {links.map((l) =>
             l.href ? (

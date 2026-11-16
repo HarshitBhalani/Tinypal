@@ -11,10 +11,22 @@
     "character",
     "forms",
     "ux",
-    "typescript"
+    "typescript",
+    "nextjs",
+    "react-component",
+    "mascot-animation",
+    "interactive",
+    "ui"
   ],
   "license": "MIT",
-  "author": "HarshitBhalani",
+  "author": {
+    "name": "Harshit Bhalani",
+    "url": "https://github.com/HarshitBhalani"
+  },
+  "funding": {
+    "type": "buymeacoffee",
+    "url": "https://buymeacoffee.com/harshit187"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/HarshitBhalani/Tinypal.git",
